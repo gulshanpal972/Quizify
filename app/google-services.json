@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "749800112274",
+    "project_id": "brain-test-54bfd",
+    "storage_bucket": "brain-test-54bfd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:749800112274:android:ee86fc058f37e15f99e64b",
+        "android_client_info": {
+          "package_name": "com.example.Quizify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2bKGtxLm8sKSJQQl6RM0wyt8oFy9EQiQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
