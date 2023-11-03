@@ -57,17 +57,17 @@ fun Profileactivity(profileViewModel: ProfileViewModel = viewModel()){
             Spacer(modifier = Modifier.height(8.dp))
             TextFields(labelValue = "Name: ", painterResource(R.drawable.profile),onTextSelected = {
                 profileViewModel.onEvent(ProfileUIevents.NameChanged(it))
-            }, errorStatus = profileViewModel.profileuistate.value.emailerror)
+            })
             TextFields(labelValue = "Email: ", painterResource(R.drawable.email),onTextSelected = {
                 profileViewModel.onEvent(ProfileUIevents.EmailChanged(it))
-            }, errorStatus = profileViewModel.profileuistate.value.emailerror)
+            })
             TextFields(labelValue = "Phone: ", painterResource(R.drawable.phone),onTextSelected = {
                 profileViewModel.onEvent(ProfileUIevents.PhoneChanged(it))
-            }, errorStatus = profileViewModel.profileuistate.value.emailerror)
+            })
             DatePickerTextField(label = "DOB: ",selectedDate = selectedDate) { newDate ->
                 selectedDate = newDate }
             Spacer(modifier = Modifier.height(30.dp))
-            ButtonComponent(value = "Save Profile", onButtonClicked = { /*TODO*/ },isEnabled = true)
+            ButtonComponent(value = "Save Profile", onButtonClicked = { /*TODO*/ })
         }
     }
     SystemBackButtonHandler {

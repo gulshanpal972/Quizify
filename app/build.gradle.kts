@@ -73,4 +73,6 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("androidx.compose.material:material:1.5.4")
     implementation("androidx.navigation:navigation-compose:2.7.4")
+    implementation ("com.google.firebase:firebase-database:20.0.1")
+
 }

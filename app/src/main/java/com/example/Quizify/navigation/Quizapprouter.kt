@@ -17,7 +17,7 @@ sealed class Screen(){
 }
 
 object Quizapprouter{
-    var currentScreen:MutableState<Screen> = mutableStateOf(Screen.Loginactivity)
+    var currentScreen:MutableState<Screen> = mutableStateOf(Screen.Signupactivity)
 
     fun navigateTo(destination:Screen){
         currentScreen.value=destination

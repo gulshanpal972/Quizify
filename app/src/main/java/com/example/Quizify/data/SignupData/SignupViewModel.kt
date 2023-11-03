@@ -3,127 +3,90 @@ package com.example.Quizify.data.SignupData
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.Quizify.data.validationrules.Validator
 import com.example.Quizify.navigation.Quizapprouter
 import com.example.Quizify.navigation.Screen
 import com.google.firebase.auth.FirebaseAuth
 
-class SignupViewModel: ViewModel() {
-    private val TAG= SignupViewModel::class.simpleName
-    var signupuistate= mutableStateOf(Signupuistate())
+class SignupViewModel : ViewModel() {
+    private val TAG = SignupViewModel::class.simpleName
+    val signupuistate = mutableStateOf(Signupuistate())
+    val isPrivacyCheckBoxChecked = mutableStateOf(false)
+    val signupinprogress = mutableStateOf(false)
 
-    var allValidationPassed= mutableStateOf(false)
-
-    var signupinprogress= mutableStateOf(false)
-
-    fun onEvent(event: SignupUIevents){
-        validateData()
-        when(event){
-            is SignupUIevents.NameChanged ->{
-                signupuistate.value=signupuistate.value.copy(
+    fun onEvent(event: SignupUIevents) {
+        when (event) {
+            is SignupUIevents.NameChanged -> {
+                signupuistate.value = signupuistate.value.copy(
                     name = event.name
                 )
                 printState()
             }
-            is SignupUIevents.EmailChanged ->{
-                signupuistate.value=signupuistate.value.copy(
+            is SignupUIevents.EmailChanged -> {
+                signupuistate.value = signupuistate.value.copy(
                     email = event.email
                 )
                 printState()
             }
-            is SignupUIevents.PhoneChanged ->{
-                signupuistate.value=signupuistate.value.copy(
+            is SignupUIevents.PhoneChanged -> {
+                signupuistate.value = signupuistate.value.copy(
                     phone = event.phone
                 )
                 printState()
             }
-            is SignupUIevents.PasswordChanged ->{
-                signupuistate.value=signupuistate.value.copy(
+            is SignupUIevents.PasswordChanged -> {
+                signupuistate.value = signupuistate.value.copy(
                     password = event.password
                 )
                 printState()
             }
 
-            is SignupUIevents.PrivacyCheckBoxChanged ->{
-                signupuistate.value=signupuistate.value.copy(
-                    privacypolicyaccepted = event.status
-                )
+            is SignupUIevents.PrivacyCheckBoxChanged -> {
+                isPrivacyCheckBoxChecked.value = event.isChecked
             }
 
-            is SignupUIevents.signupButtonClicked ->{
+            is SignupUIevents.signupButtonClicked -> {
                 signUp()
             }
         }
     }
 
     private fun signUp() {
-        Log.d(TAG,"Inside_printState")
+        Log.d(TAG, "Inside_printState")
         printState()
         createUserFirebase(
-            email=signupuistate.value.email,
-            password=signupuistate.value.password
-        )
-    }
-
-    private fun validateData() {
-        val nameValidator=Validator.validateName(
-            name=signupuistate.value.name
-        )
-
-        val emailValidator=Validator.validateEmail(
-            email=signupuistate.value.email
-        )
-
-        val phoneValidator=Validator.validatePhone(
-            phone = signupuistate.value.phone
-        )
-
-        val passwordValidator=Validator.validatePassword(
+            email = signupuistate.value.email,
             password = signupuistate.value.password
         )
-
-        val privacyPolicyValidator=Validator.privacyPolicyAcceptance(
-            statusvalue = signupuistate.value.privacypolicyaccepted
-        )
-
-        Log.d(TAG, "Inside_validationData")
-        Log.d(TAG, "name = $nameValidator")
-        Log.d(TAG, "email = $emailValidator")
-        Log.d(TAG, "phone = $phoneValidator")
-        Log.d(TAG, "password = $passwordValidator")
-        Log.d(TAG, "privacypolicy= $privacyPolicyValidator")
-
-        signupuistate.value=signupuistate.value.copy(
-            nameerror = nameValidator.status,
-            emailerror = emailValidator.status,
-            phoneerror = phoneValidator.status,
-            passworderror = passwordValidator.status,
-            privacycheckboxerror = privacyPolicyValidator.status
-        )
-        allValidationPassed.value = nameValidator.status && emailValidator.status && phoneValidator.status && passwordValidator.status && privacyPolicyValidator.status
     }
 
-    private fun printState(){
-        Log.d(TAG,"Inside_printState")
-        Log.d(TAG,signupuistate.value.toString())
+    private fun printState() {
+        Log.d(TAG, "Inside_printState")
+        Log.d(TAG, signupuistate.value.toString())
     }
 
-    private fun createUserFirebase(email:String,password:String){
-        signupinprogress.value=true
+    private fun createUserFirebase(email: String, password: String) {
+        Log.d(TAG, "Inside_createUserFirebase")
+        signupinprogress.value = true
         FirebaseAuth.getInstance()
             .createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener{
+            .addOnCompleteListener { task ->
                 Log.d(TAG, "Inside_OnCompleteListener")
-                Log.d(TAG,"isSuccessful= ${it.isSuccessful}")
-                signupinprogress.value=false
-                if(it.isSuccessful){
+                if (task.isSuccessful) {
+                    Log.d(TAG, "User registration successful.")
+                    signupinprogress.value = false
                     Quizapprouter.navigateTo(Screen.Homeactivity)
+                } else {
+                    Log.d(TAG, "User registration failed.")
+                    signupinprogress.value = false
+                    Log.e(TAG, "Error message: ${task.exception?.message}")
                 }
             }
-            .addOnFailureListener{
+            .addOnFailureListener { e ->
                 Log.d(TAG, "Inside_OnFailureListener")
-                Log.d(TAG, "Exception= ${it.message}")
-                Log.d(TAG, "Exception= ${it.localizedMessage}")
+                signupinprogress.value = false
+                Log.e(TAG, "Exception: ${e.message}")
+                Log.e(TAG, "Localized Message: ${e.localizedMessage}")
+                e.printStackTrace()
             }
     }
 }

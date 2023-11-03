@@ -48,14 +48,14 @@ fun AdminLoginActivity(loginViewModel: LoginViewModel = viewModel()){
                 Spacer(modifier = Modifier.height(20.dp))
                 TextFields(labelValue = "Email", painterResource(R.drawable.email), onTextSelected = {
                     loginViewModel.onEvent(LoginUIevents.EmailChanged(it))
-                }, errorStatus = loginViewModel.loginuistate.value.emailerror)
-                PasswordTextFields(labelValue = "Password", painterResource(R.drawable.password), onTextSelected = {
+                })
+                PasswordTextFields(labelValue = "Password", painterResource(R.drawable.password)) {
                     loginViewModel.onEvent(LoginUIevents.PasswordChanged(it))
-                }, errorStatus = loginViewModel.loginuistate.value.passworderror)
+                }
                 Spacer(modifier = Modifier.height(40.dp))
                 ButtonComponent(value = "Login", onButtonClicked = {
                     loginViewModel.onEvent(LoginUIevents.adminLoginButtonClicked)
-                }, isEnabled = loginViewModel.allValidationPassed.value)
+                })
             }
         }
 

@@ -119,8 +119,7 @@ fun HeadingTextComponent(value: String){
         style = TextStyle(
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
-            fontStyle = FontStyle.Normal,
-            color = Color.White
+            fontStyle = FontStyle.Normal
         ),
         textAlign = TextAlign.Center
     )
@@ -128,7 +127,7 @@ fun HeadingTextComponent(value: String){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextFields(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit, errorStatus:Boolean=false){
+fun TextFields(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit){
     var textValue by remember {
         mutableStateOf("")
     }
@@ -150,14 +149,13 @@ fun TextFields(labelValue: String, painterResource: Painter, onTextSelected: (St
         },
         leadingIcon = {
             Icon(painter = painterResource, contentDescription = "")
-        },
-        isError = !errorStatus
+        }
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordTextFields(labelValue: String,painterResource: Painter, onTextSelected: (String) -> Unit, errorStatus:Boolean){
+fun PasswordTextFields(labelValue: String, painterResource: Painter, onTextSelected: (String) -> Unit){
     var password by remember {
         mutableStateOf("")
     }
@@ -201,10 +199,10 @@ fun PasswordTextFields(labelValue: String,painterResource: Painter, onTextSelect
             }
         },
         visualTransformation = if (passwordvisibility.value) VisualTransformation.None
-        else PasswordVisualTransformation(),
-        isError = !errorStatus
+        else PasswordVisualTransformation()
     )
 }
+
 
 @Composable
 fun CheckBoxComponent(value: String, onTextSelected:(String)->Unit, onCheckedChange:(Boolean)->Unit){
@@ -258,7 +256,7 @@ fun ClickableTextComponent(value: String, onTextSelected:(String)->Unit){
 }
 
 @Composable
-fun ButtonComponent(value: String, onButtonClicked:()->Unit, isEnabled:Boolean=false){
+fun ButtonComponent(value: String, onButtonClicked:()->Unit){
     Button(
         modifier= Modifier
             .fillMaxWidth()
@@ -266,8 +264,7 @@ fun ButtonComponent(value: String, onButtonClicked:()->Unit, isEnabled:Boolean=f
         onClick = { onButtonClicked.invoke() },
         contentPadding = PaddingValues(),
         colors = ButtonDefaults.buttonColors(Color.Transparent),
-        shape=RoundedCornerShape(50.dp),
-        enabled = isEnabled
+        shape=RoundedCornerShape(50.dp)
     ) {
         Box(
             modifier = Modifier
