@@ -43,13 +43,21 @@ internal fun ComposableHandler(
     }
 }
 
+//@Composable
+//internal fun SystemBackButtonHandler(onBackPressed: () -> Unit){
+//    CompositionLocalProvider(
+//        LocalBackPressedDispatcher provides LocalLifecycleOwner.current as ComponentActivity
+//    ) {
+//        ComposableHandler {
+//            onBackPressed()
+//        }
+//    }
+//}
 @Composable
-internal fun SystemBackButtonHandler(onBackPressed: () -> Unit){
-    CompositionLocalProvider(
-        LocalBackPressedDispatcher provides LocalLifecycleOwner.current as ComponentActivity
-    ) {
+internal fun SystemBackButtonHandler() {
+    CompositionLocalProvider(LocalBackPressedDispatcher provides LocalLifecycleOwner.current as ComponentActivity) {
         ComposableHandler {
-            onBackPressed()
+            Quizapprouter.navigateBack()
         }
     }
 }

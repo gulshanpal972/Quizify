@@ -70,9 +70,7 @@ fun Profileactivity(profileViewModel: ProfileViewModel = viewModel()){
             ButtonComponent(value = "Save Profile", onButtonClicked = { /*TODO*/ })
         }
     }
-    SystemBackButtonHandler {
-        Quizapprouter.navigateTo(Screen.Homeactivity)
-    }
+    SystemBackButtonHandler()
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

@@ -41,7 +41,9 @@ fun PracticeSets(names:List<String> =List(20){(it + 1).toString()}){
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center
             )
-            LazyColumn(modifier = Modifier.padding(vertical = 4.dp).weight(1f)){
+            LazyColumn(modifier = Modifier
+                .padding(vertical = 4.dp)
+                .weight(1f)){
                 items(items=firstList){name->
                     ListItem(name = name)
                 }
@@ -54,7 +56,9 @@ fun PracticeSets(names:List<String> =List(20){(it + 1).toString()}){
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center
             )
-            LazyColumn(modifier = Modifier.padding(vertical = 4.dp).weight(1f)){
+            LazyColumn(modifier = Modifier
+                .padding(vertical = 4.dp)
+                .weight(1f)){
                 items(items=secondList){name->
                     ListItem(name = name)
                 }
@@ -82,7 +86,5 @@ fun ListItem(name: String){
             }
         }
     }
-    SystemBackButtonHandler {
-        Quizapprouter.navigateTo(Screen.Homeactivity)
-    }
+    SystemBackButtonHandler()
 }

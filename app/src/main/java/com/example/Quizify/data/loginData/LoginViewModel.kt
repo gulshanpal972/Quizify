@@ -37,7 +37,10 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun adminLogin() {
-        // TODO: Implement admin login
+        loginInProgress.value=true
+        Log.d(TAG,"Inside_printState")
+        printState()
+        loginAdminFirebase(email=loginuistate.value.email, password=loginuistate.value.password)
     }
 
 
@@ -46,6 +49,18 @@ class LoginViewModel : ViewModel() {
         Log.d(TAG,"Inside_printState")
         printState()
         loginUserFirebase(email=loginuistate.value.email, password=loginuistate.value.password)
+    }
+
+    private fun loginAdminFirebase(email: String, password: String){
+        if(email=="shriram@ayodhya.bharat" && password=="jaishriram"){
+            loginInProgress.value = false
+            Quizapprouter.navigateTo(Screen.AdminActivities)
+        }else{
+            loginInProgress.value = false
+            Log.d(TAG, "login failed")
+            val errorMessage ="failed"
+            loginError.value = errorMessage
+        }
     }
 
     private fun loginUserFirebase(email: String, password: String) {

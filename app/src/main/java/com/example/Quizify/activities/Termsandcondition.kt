@@ -21,8 +21,6 @@ fun Termsandcondition(){
         .padding(16.dp)
     ) {
         HeadingTextComponent(value = "Terms of Use")
-        SystemBackButtonHandler {
-            Quizapprouter.navigateTo(Screen.Signupactivity)
-        }
+        SystemBackButtonHandler()
     }
 }

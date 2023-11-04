@@ -342,12 +342,13 @@ fun ClickableTextComponent(value1: String,value2:String, onTextSelected:(String)
 }
 
 @Composable
-fun UnderlinedTextComponent(value: String){
+fun UnderlinedTextComponent(value: String, onClick:()->Unit){
     Text(
         text = value,
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 40.dp),
+            .heightIn(min = 40.dp)
+            .clickable(onClick=onClick),
         style = TextStyle(
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal,

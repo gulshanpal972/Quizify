@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.example.Quizify.navigation.Quizapprouter
 import com.example.Quizify.navigation.Screen
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignupViewModel : ViewModel() {
     private val TAG = SignupViewModel::class.simpleName
@@ -54,7 +56,9 @@ class SignupViewModel : ViewModel() {
         Log.d(TAG, "Inside_printState")
         printState()
         createUserFirebase(
+            name=signupuistate.value.name,
             email = signupuistate.value.email,
+            phone=signupuistate.value.phone,
             password = signupuistate.value.password
         )
     }
@@ -64,7 +68,7 @@ class SignupViewModel : ViewModel() {
         Log.d(TAG, signupuistate.value.toString())
     }
 
-    private fun createUserFirebase(email: String, password: String) {
+    private fun createUserFirebase(name: String, email: String, phone: String, password: String) {
         Log.d(TAG, "Inside_createUserFirebase")
         signupinprogress.value = true
         FirebaseAuth.getInstance()
@@ -73,8 +77,28 @@ class SignupViewModel : ViewModel() {
                 Log.d(TAG, "Inside_OnCompleteListener")
                 if (task.isSuccessful) {
                     Log.d(TAG, "User registration successful.")
-                    signupinprogress.value = false
-                    Quizapprouter.navigateTo(Screen.Homeactivity)
+
+                    val userID = FirebaseAuth.getInstance().currentUser?.uid
+
+                    if (userID != null) {
+                        val documentReference = FirebaseFirestore.getInstance().collection("users").document(userID)
+                        val user = HashMap<String, Any>()
+                        user["Name"] = name
+                        user["Email"] = email
+                        user["Phone"] = phone
+
+                        documentReference
+                            .set(user)
+                            .addOnSuccessListener { void ->
+                                Log.d(TAG, "Data inserted successfully")
+                                signupinprogress.value = false
+                                Quizapprouter.navigateTo(Screen.Homeactivity)
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e(TAG, "Error inserting data: ${e.message}")
+                                signupinprogress.value = false
+                            }
+                    }
                 } else {
                     Log.d(TAG, "User registration failed.")
                     signupinprogress.value = false

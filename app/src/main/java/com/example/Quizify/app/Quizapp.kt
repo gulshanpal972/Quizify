@@ -13,6 +13,7 @@ import com.example.Quizify.MainScreen
 import com.example.Quizify.activities.AddQuestions
 import com.example.Quizify.activities.AdminActivity
 import com.example.Quizify.activities.AdminLoginActivity
+import com.example.Quizify.activities.ForgetPassword
 import com.example.Quizify.activities.Loginactivity
 import com.example.Quizify.activities.PracticeSets
 import com.example.Quizify.activities.Profileactivity
@@ -73,6 +74,10 @@ fun Quizapp(homeViewModel: HomeViewModel= viewModel()){
 
                 is Screen.AdminLoginActivity->{
                     AdminLoginActivity()
+                }
+
+                is Screen.ForgetPassword->{
+                    ForgetPassword()
                 }
             }
         }

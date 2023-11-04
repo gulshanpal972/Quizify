@@ -41,7 +41,7 @@ fun MainScreen(homeViewModel: HomeViewModel = viewModel()){
         },
         drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
         drawerContent={
-            NavigationDrawerHeader(homeViewModel.emailId.value)
+            NavigationDrawerHeader(homeViewModel.uName.value)
             Drawer(scope = coroutineScope, scaffoldState = scaffoldState, navController = navController)
             NavigationDividerComponent()
             LogoutComponent(onLogoutClicked = { homeViewModel.logout() })

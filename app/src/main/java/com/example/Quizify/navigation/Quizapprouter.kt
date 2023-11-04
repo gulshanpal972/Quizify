@@ -2,6 +2,7 @@ package com.example.Quizify.navigation
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import kotlin.math.log
 
 sealed class Screen(){
     object Signupactivity:Screen()
@@ -14,12 +15,26 @@ sealed class Screen(){
     object AdminActivities:Screen()
     object AddQuestions:Screen()
     object AdminLoginActivity:Screen()
+    object ForgetPassword:Screen()
 }
 
-object Quizapprouter{
-    var currentScreen:MutableState<Screen> = mutableStateOf(Screen.Signupactivity)
+object Quizapprouter {
+    private val screenStack = mutableListOf<Screen>()
+    val currentScreen: MutableState<Screen> = mutableStateOf(Screen.Loginactivity)
 
-    fun navigateTo(destination:Screen){
-        currentScreen.value=destination
+    fun navigateTo(destination: Screen) {
+        println("okokok")
+        screenStack.add(currentScreen.value)
+        currentScreen.value = destination
+    }
+
+    fun navigateBack() {
+        if (screenStack.isNotEmpty()) {
+            currentScreen.value = screenStack.removeAt(screenStack.size - 1)
+        }
+    }
+
+    fun clearScreenStack() {
+        screenStack.clear()
     }
 }

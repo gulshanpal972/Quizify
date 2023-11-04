@@ -7,15 +7,19 @@ import com.example.Quizify.data.SignupData.SignupViewModel
 import com.example.Quizify.navigation.Quizapprouter
 import com.example.Quizify.navigation.Screen
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
 
 class HomeViewModel:ViewModel() {
     private val TAG= SignupViewModel::class.simpleName
 
     val isUserLoggedIn : MutableLiveData<Boolean> = MutableLiveData()
 
-    val emailId:MutableLiveData<String> = MutableLiveData()
+    val uName:MutableLiveData<String> = MutableLiveData()
 
     fun logout(){
+        Quizapprouter.clearScreenStack()
         val firebaseAuth= FirebaseAuth.getInstance()
 
         firebaseAuth.signOut()
@@ -41,11 +45,17 @@ class HomeViewModel:ViewModel() {
         }
     }
 
-    fun getUserData(){
-        FirebaseAuth.getInstance().currentUser?.also {
-            it.email?.also {email->
-                emailId.value=email
-            }
-        }
+    fun getUserData() {
+        val userID = FirebaseAuth.getInstance().currentUser?.uid
+
+        userID?.let { FirebaseFirestore.getInstance().collection("users").document(it) }
+            ?.addSnapshotListener(EventListener<DocumentSnapshot> { documentSnapshot, e ->
+                if (e != null) {
+                    Log.d(TAG, "Error in fetching data in HomeViewModel getUserData()")
+                } else {
+                    uName.value = documentSnapshot?.getString("Name")
+                    Log.d(TAG,"failed name ${uName.value}")
+                }
+            })
     }
 }

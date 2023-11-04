@@ -151,8 +151,5 @@ fun Questionsactivity() {
     )
 
     ListWithButtons(questions = questions)
-
-    SystemBackButtonHandler {
-        Quizapprouter.navigateTo(Screen.PracticeSets)
-    }
+    SystemBackButtonHandler()
 }
