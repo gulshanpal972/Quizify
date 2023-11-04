@@ -65,6 +65,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
@@ -348,7 +349,7 @@ fun UnderlinedTextComponent(value: String, onClick:()->Unit){
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(min = 40.dp)
-            .clickable(onClick=onClick),
+            .clickable(onClick = onClick),
         style = TextStyle(
             fontSize = 18.sp,
             fontWeight = FontWeight.Normal,
@@ -364,7 +365,7 @@ fun UnderlinedTextComponent(value: String, onClick:()->Unit){
 @Composable
 fun AppToolBar(toolbartitle:String, navigationIconClicked:()->Unit){
     TopAppBar(
-        modifier = Modifier.background(Brush.horizontalGradient(colors = listOf(Color(0xFF2EAAFA), Color(0xFF8C04DB)))),
+        modifier = Modifier.background(color = colorResource(id = R.color.appcolor)),
         title = {
             Box(modifier = Modifier.fillMaxSize(),
                 contentAlignment= Alignment.Center
@@ -407,7 +408,7 @@ fun ProfileEdit(value: String){
 fun NavigationDrawerHeader(value:String?){
     Box(modifier = Modifier
         .fillMaxWidth()
-        .background(Brush.horizontalGradient(colors = listOf(Color(0xFF2EAAFA), Color(0xFF8C04DB))))
+        .background(color = colorResource(id = R.color.appcolor))
         .height(220.dp)
         .padding(20.dp)
     ){
@@ -710,6 +711,7 @@ fun AdminFullTestComponent(cardHeight: Int){
         modifier = Modifier
             .height(cardHeight.dp)
             .padding(10.dp),
+        onClick = {Quizapprouter.navigateTo(Screen.AddQuestions)},
         shadowElevation = 10.dp
     ) {
         Box(
@@ -725,138 +727,4 @@ fun AdminFullTestComponent(cardHeight: Int){
             )
         }
     }
-}
-
-@Composable
-fun AddQuestionCard(){
-    Surface(
-        shape = RoundedCornerShape(16.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(IntrinsicSize.Min)
-            .padding(10.dp),
-        shadowElevation = 10.dp
-    ) {
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Column(modifier = Modifier.padding(4.dp)){
-                Text(
-                    text = "Question 1: ",
-                    fontSize = 20.sp,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center
-                )
-                TwoLineTextFieldDemo()
-                Spacer(modifier = Modifier.height(8.dp))
-                Row {
-                    Text(modifier = Modifier.align(Alignment.CenterVertically),
-                        text = "Options 1: ",
-                        fontSize = 14.sp,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Center
-                    )
-                    TwoLineTextFieldDemo()
-                }
-                Spacer(modifier = Modifier.height(2.dp))
-                Row {
-                    Text(modifier = Modifier.align(Alignment.CenterVertically),
-                        text = "Options 2: ",
-                        fontSize = 14.sp,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Center
-                    )
-                    TwoLineTextFieldDemo()
-                }
-                Spacer(modifier = Modifier.height(2.dp))
-                Row {
-                    Text(modifier = Modifier.align(Alignment.CenterVertically),
-                        text = "Options 3: ",
-                        fontSize = 14.sp,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Center
-                    )
-                    TwoLineTextFieldDemo()
-                }
-                Spacer(modifier = Modifier.height(2.dp))
-                Row {
-                    Text(modifier = Modifier.align(Alignment.CenterVertically),
-                        text = "Options 4: ",
-                        fontSize = 14.sp,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Center
-                    )
-                    TwoLineTextFieldDemo()
-                }
-                Spacer(modifier = Modifier.height(2.dp))
-                Row {
-                    Text(modifier = Modifier.align(Alignment.CenterVertically),
-                        text = "Answer:     ",
-                        fontSize = 14.sp,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Center
-                    )
-                    TwoLineTextFieldDemo()
-                }
-                Spacer(modifier = Modifier.height(5.dp))
-            }
-        }
-    }
-}
-
-@Composable
-fun TwoLineTextField(
-    text: String,
-    onTextChanged: (String) -> Unit
-) {
-    var isFocused by remember { mutableStateOf(false) }
-
-    BasicTextField(
-        value = text,
-        onValueChange = {
-            onTextChanged(it)
-        },
-        textStyle = TextStyle(
-            fontSize = 16.sp,
-            color = Color.Black
-        ),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Done
-        ),
-        keyboardActions = KeyboardActions(
-            onDone = {
-                isFocused = false
-            }
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(
-                width = 1.dp,
-                color = if (isFocused) Color.Blue else Color.Gray,
-                shape = RoundedCornerShape(8.dp)
-            )
-            .padding(8.dp)
-            .onFocusChanged {
-                isFocused = it.isFocused
-            }
-    )
-}
-
-@Composable
-fun TwoLineTextFieldDemo() {
-    var text by remember { mutableStateOf("") }
-
-    TwoLineTextField(
-        text = text,
-        onTextChanged = {
-            text = it
-        }
-    )
 }

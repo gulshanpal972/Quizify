@@ -54,7 +54,7 @@ class HomeViewModel:ViewModel() {
                     Log.d(TAG, "Error in fetching data in HomeViewModel getUserData()")
                 } else {
                     uName.value = documentSnapshot?.getString("Name")
-                    Log.d(TAG,"failed name ${uName.value}")
+                    Log.d(TAG,"successful")
                 }
             })
     }

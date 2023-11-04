@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.Quizify.MainScreen
 import com.example.Quizify.activities.AddQuestions
+import com.example.Quizify.activities.Admin
 import com.example.Quizify.activities.AdminActivity
 import com.example.Quizify.activities.AdminLoginActivity
 import com.example.Quizify.activities.ForgetPassword
@@ -78,6 +79,10 @@ fun Quizapp(homeViewModel: HomeViewModel= viewModel()){
 
                 is Screen.ForgetPassword->{
                     ForgetPassword()
+                }
+
+                is Screen.Admin->{
+                    Admin()
                 }
             }
         }

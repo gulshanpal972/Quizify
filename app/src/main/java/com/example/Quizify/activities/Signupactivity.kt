@@ -44,7 +44,6 @@ import com.example.Quizify.components.ClickableTextComponent
 import com.example.Quizify.components.DividerTextComponent
 import com.example.Quizify.components.HeadingTextComponent
 import com.example.Quizify.components.NormalTextComponent
-import com.example.Quizify.components.PasswordTextFields
 import com.example.Quizify.data.SignupData.SignupUIevents
 import com.example.Quizify.data.SignupData.SignupViewModel
 import com.example.Quizify.navigation.Quizapprouter
@@ -56,6 +55,7 @@ fun Signupactivity(signupViewModel: SignupViewModel = viewModel()) {
     val state = signupViewModel.signupuistate.value
     val isPrivacyCheckBoxChecked = signupViewModel.isPrivacyCheckBoxChecked.value
     val signupinprogress = signupViewModel.signupinprogress.value
+    val emailExistError=signupViewModel.emailError.value
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -117,6 +117,12 @@ fun Signupactivity(signupViewModel: SignupViewModel = viewModel()) {
                 } else if (checkboxError) {
                     Text(
                         text = errorMessage,
+                        color = Color.Red,
+                        fontSize = 12.sp
+                    )
+                }else if(emailExistError){
+                    Text(
+                        text = "Email already exist",
                         color = Color.Red,
                         fontSize = 12.sp
                     )

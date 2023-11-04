@@ -16,11 +16,12 @@ sealed class Screen(){
     object AddQuestions:Screen()
     object AdminLoginActivity:Screen()
     object ForgetPassword:Screen()
+    object Admin:Screen()
 }
 
 object Quizapprouter {
     private val screenStack = mutableListOf<Screen>()
-    val currentScreen: MutableState<Screen> = mutableStateOf(Screen.Loginactivity)
+    val currentScreen: MutableState<Screen> = mutableStateOf(Screen.AdminActivities)
 
     fun navigateTo(destination: Screen) {
         println("okokok")

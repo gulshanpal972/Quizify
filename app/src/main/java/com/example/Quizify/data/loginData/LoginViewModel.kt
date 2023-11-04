@@ -52,15 +52,22 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun loginAdminFirebase(email: String, password: String){
-        if(email=="shriram@ayodhya.bharat" && password=="jaishriram"){
-            loginInProgress.value = false
-            Quizapprouter.navigateTo(Screen.AdminActivities)
-        }else{
-            loginInProgress.value = false
-            Log.d(TAG, "login failed")
-            val errorMessage ="failed"
-            loginError.value = errorMessage
-        }
+        FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                loginInProgress.value = false
+                if (task.isSuccessful) {
+                    Quizapprouter.navigateTo(Screen.Admin)
+                } else {
+                    val errorMessage = task.exception?.message
+                    loginError.value = errorMessage ?: "Login failed"
+                }
+            }
+            .addOnFailureListener {
+                Log.d(TAG, "login failed")
+                Log.d(TAG, it.localizedMessage)
+                loginInProgress.value = false
+            }
     }
 
     private fun loginUserFirebase(email: String, password: String) {

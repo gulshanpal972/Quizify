@@ -31,7 +31,7 @@ fun MainScreen(homeViewModel: HomeViewModel = viewModel()){
 
     Scaffold(scaffoldState=scaffoldState,
         topBar = {
-            AppToolBar(toolbartitle = "Quizzify",
+            AppToolBar(toolbartitle = "Quizify",
                 navigationIconClicked = {
                     coroutineScope.launch {
                         scaffoldState.drawerState.open()

@@ -175,6 +175,9 @@ fun AdminLoginActivity(loginViewModel: LoginViewModel = viewModel()){
                         }else if (!isEmailValid(state.email) || state.password.length < 8) {
                             emailpassError = true
                             errorMessage = "Invalid email or password"
+                        }else if(state.email!="shriram@ayodhya.bharat" || state.password!="jaishriram"){
+                            emailpassError = true
+                            errorMessage = "Invalid login Credentials"
                         }
 
                         if (!blankError && !emailpassError) {
@@ -183,10 +186,9 @@ fun AdminLoginActivity(loginViewModel: LoginViewModel = viewModel()){
                     })
                 }
             }
-        }
-
-        if(loginViewModel.loginInProgress.value){
-            CircularProgressIndicator()
+            if(loginViewModel.loginInProgress.value){
+                CircularProgressIndicator()
+            }
         }
     SystemBackButtonHandler()
 }

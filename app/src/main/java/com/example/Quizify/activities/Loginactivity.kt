@@ -45,8 +45,6 @@ import com.example.Quizify.components.ClickableTextComponent
 import com.example.Quizify.components.DividerTextComponent
 import com.example.Quizify.components.HeadingTextComponent
 import com.example.Quizify.components.NormalTextComponent
-import com.example.Quizify.components.PasswordTextFields
-import com.example.Quizify.components.TextFields
 import com.example.Quizify.components.UnderlinedTextComponent
 import com.example.Quizify.data.loginData.LoginUIevents
 import com.example.Quizify.data.loginData.LoginViewModel
@@ -54,7 +52,6 @@ import com.example.Quizify.navigation.Quizapprouter
 import com.example.Quizify.navigation.Screen
 import com.example.Quizify.navigation.SystemBackButtonHandler
 import com.example.Quizify.R
-import com.example.Quizify.data.SignupData.SignupUIevents
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)

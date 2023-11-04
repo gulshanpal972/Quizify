@@ -22,19 +22,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.Quizify.R
 import com.example.Quizify.components.AdminCardComponentMarathon
 import com.example.Quizify.components.AdminFullTestComponent
 import com.example.Quizify.components.CardComponentHalfWidth
+import com.example.Quizify.data.NavigationDrawer.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun AdminActivity(){
+fun AdminActivity(homeViewModel: HomeViewModel = viewModel()){
+    homeViewModel.checkActiveSession()
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -43,7 +48,7 @@ fun AdminActivity(){
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TopAppBar(
-                modifier = Modifier.background(Brush.horizontalGradient(colors = listOf(Color(0xFF2EAAFA), Color(0xFF8C04DB)))),
+                modifier = Modifier.background(color = colorResource(id = R.color.appcolor)),
                 title = {
                     Box(modifier = Modifier.fillMaxSize(),
                         contentAlignment= Alignment.Center
