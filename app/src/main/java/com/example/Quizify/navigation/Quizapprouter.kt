@@ -21,8 +21,8 @@ sealed class Screen(){
 
 object Quizapprouter {
     private val screenStack = mutableListOf<Screen>()
-//    val currentScreen: MutableState<Screen> = mutableStateOf(Screen.Loginactivity)
-val currentScreen: MutableState<Screen> = mutableStateOf(Screen.Homeactivity)
+    val currentScreen: MutableState<Screen> = mutableStateOf(Screen.Loginactivity)
+//val currentScreen: MutableState<Screen> = mutableStateOf(Screen.Homeactivity)
 
     fun navigateTo(destination: Screen) {
         println("okokok")
