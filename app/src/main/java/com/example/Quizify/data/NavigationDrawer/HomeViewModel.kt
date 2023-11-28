@@ -1,8 +1,11 @@
 package com.example.Quizify.data.NavigationDrawer
 
 import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.Quizify.activities.AdminActivity
 import com.example.Quizify.data.SignupData.SignupViewModel
 import com.example.Quizify.navigation.Quizapprouter
 import com.example.Quizify.navigation.Screen
@@ -36,6 +39,7 @@ class HomeViewModel:ViewModel() {
     }
 
     fun checkActiveSession(){
+//        val userID = FirebaseAuth.getInstance().currentUser?.uid
         if(FirebaseAuth.getInstance().currentUser!=null){
             Log.d(TAG, "Valid Session")
             isUserLoggedIn.value=true

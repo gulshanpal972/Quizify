@@ -1,7 +1,9 @@
 package com.example.Quizify.activities
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,10 +11,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -31,15 +37,15 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.Quizify.R
 import com.example.Quizify.components.AdminCardComponentMarathon
-import com.example.Quizify.components.AdminFullTestComponent
-import com.example.Quizify.components.CardComponentHalfWidth
+import com.example.Quizify.components.CardComponentFullWidth
 import com.example.Quizify.data.NavigationDrawer.HomeViewModel
+import com.example.Quizify.navigation.Quizapprouter
+import com.example.Quizify.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun AdminActivity(homeViewModel: HomeViewModel = viewModel()){
-    homeViewModel.checkActiveSession()
+fun AdminActivity(){
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -59,8 +65,14 @@ fun AdminActivity(homeViewModel: HomeViewModel = viewModel()){
                     }},
                 colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color.Transparent )
             )
-            AdminCardComponentMarathon(cardHeight = 120)
-            AdminFullTestComponent(cardHeight = 120)
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Row {
+                CardComponentFullWidth(cardHeight = 120, subjectName="FullTest"){subjectName->
+                    Quizapprouter.navigateTo(Screen.AddSet(subjectName))
+                }
+            }
+
             Spacer(modifier = Modifier.height(4.dp))
             Text(modifier=Modifier.fillMaxWidth(),
                 text = "Topic Wise Quizzes",
@@ -71,22 +83,68 @@ fun AdminActivity(homeViewModel: HomeViewModel = viewModel()){
             )
             Spacer(modifier = Modifier.height(4.dp))
             Row{
-                CardComponentHalfWidth(subjectName="Mathematics")
-                CardComponentHalfWidth(subjectName="Reasoning")
+                CardComponentSubjectWise(subjectName="Mathematics"){subjectName ->
+                    Quizapprouter.navigateTo(Screen.AddSet(subjectName))
+                }
+                CardComponentSubjectWise(subjectName="Reasoning"){subjectName ->
+                    Quizapprouter.navigateTo(Screen.AddSet(subjectName))
+                }
             }
             Row{
-                CardComponentHalfWidth(subjectName="English")
-                CardComponentHalfWidth(subjectName="Pseudo Code")
+                CardComponentSubjectWise(subjectName="English"){subjectName ->
+                    Quizapprouter.navigateTo(Screen.AddSet(subjectName))
+                }
+                CardComponentSubjectWise(subjectName="Pseudo Code"){subjectName ->
+                    Quizapprouter.navigateTo(Screen.AddSet(subjectName))
+                }
             }
             Row{
-                CardComponentHalfWidth(subjectName="English")
-                CardComponentHalfWidth(subjectName="Pseudo Code")
+                CardComponentSubjectWise(subjectName="General Knowledge"){subjectName ->
+                    Quizapprouter.navigateTo(Screen.AddSet(subjectName))
+                }
+                CardComponentSubjectWise(subjectName="History"){subjectName ->
+                    Quizapprouter.navigateTo(Screen.AddSet(subjectName))
+                }
             }
         }
 }
 
-@Preview
 @Composable
-fun PreviewAdmin(){
-    AdminActivity()
+fun CardComponentSubjectWise(subjectName:String?, onClick: (String) -> Unit) {
+    if (subjectName != null) {
+        Surface(
+            shape = RoundedCornerShape(16.dp),
+            color = Color(0xFFDAE1E7),
+            modifier = Modifier
+                .height(150.dp)
+                .padding(10.dp)
+                .width(160.dp),
+            onClick = { onClick(subjectName) },
+            shadowElevation = 10.dp
+        ) {
+            Row(
+                modifier = Modifier.padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(2f),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(modifier=Modifier.fillMaxWidth(),
+                        text = subjectName,
+                        fontSize =  18.sp,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
+        }
+    } else {
+        Log.e("CardComponentHalfWidth", "SubjectName is null")
+    }
 }

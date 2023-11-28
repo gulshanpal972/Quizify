@@ -21,8 +21,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.Quizify.components.CardComponentFullWidth
+//import com.example.Quizify.components.CardComponentFullWidth
 import com.example.Quizify.components.CardComponentHalfWidth
 import com.example.Quizify.components.CardComponentMarathon
+import com.example.Quizify.navigation.Quizapprouter
+import com.example.Quizify.navigation.Screen
 
 @Composable
 fun Homeactivity(){
@@ -33,8 +36,11 @@ fun Homeactivity(){
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CardComponentMarathon(cardHeight = 150)
-        CardComponentFullWidth(cardHeight = 150)
+//        CardComponentMarathon(cardHeight = 150)
+        CardComponentFullWidth(cardHeight = 150, subjectName="FullTest"){subjectName ->
+            Quizapprouter.navigateTo(Screen.PracticeSets(subjectName))
+            println("Navigating to PracticeSets with subjectName: $subjectName")
+        }
         Spacer(modifier = Modifier.height(4.dp))
         Text(modifier=Modifier.fillMaxWidth(),
             text = "Topic Wise Quizzes",
@@ -45,22 +51,29 @@ fun Homeactivity(){
         )
         Spacer(modifier = Modifier.height(4.dp))
         Row{
-            CardComponentHalfWidth(subjectName="Mathematics")
-            CardComponentHalfWidth(subjectName="Reasoning")
+            CardComponentHalfWidth(subjectName="Mathematics"){subjectName ->
+                Quizapprouter.navigateTo(Screen.PracticeSets(subjectName))
+                println("Navigating to PracticeSets with subjectName: $subjectName")
+            }
+            CardComponentHalfWidth(subjectName="Reasoning"){subjectName ->
+                Quizapprouter.navigateTo(Screen.PracticeSets(subjectName))
+            }
         }
         Row{
-            CardComponentHalfWidth(subjectName="English")
-            CardComponentHalfWidth(subjectName="Pseudo Code")
+            CardComponentHalfWidth(subjectName="English"){subjectName ->
+                Quizapprouter.navigateTo(Screen.PracticeSets(subjectName))
+            }
+            CardComponentHalfWidth(subjectName="Pseudo Code"){subjectName ->
+                Quizapprouter.navigateTo(Screen.PracticeSets(subjectName))
+            }
         }
         Row{
-            CardComponentHalfWidth(subjectName="English")
-            CardComponentHalfWidth(subjectName="Pseudo Code")
+            CardComponentHalfWidth(subjectName="General Knowledge"){subjectName ->
+                Quizapprouter.navigateTo(Screen.PracticeSets(subjectName))
+            }
+            CardComponentHalfWidth(subjectName="History"){subjectName ->
+                Quizapprouter.navigateTo(Screen.PracticeSets(subjectName))
+            }
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewHome(){
-    Homeactivity()
 }

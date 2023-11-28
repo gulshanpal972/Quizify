@@ -120,7 +120,8 @@ fun HeadingTextComponent(value: String){
         style = TextStyle(
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
-            fontStyle = FontStyle.Normal
+            fontStyle = FontStyle.Normal,
+            color = Color.White
         ),
         textAlign = TextAlign.Center
     )
@@ -365,7 +366,7 @@ fun UnderlinedTextComponent(value: String, onClick:()->Unit){
 @Composable
 fun AppToolBar(toolbartitle:String, navigationIconClicked:()->Unit){
     TopAppBar(
-        modifier = Modifier.background(color = colorResource(id = R.color.appcolor)),
+        modifier = Modifier.background(Brush.horizontalGradient(colors = listOf(Color(0xFF2EAAFA), Color(0xFF8C04DB)))),
         title = {
             Box(modifier = Modifier.fillMaxSize(),
                 contentAlignment= Alignment.Center
@@ -408,7 +409,7 @@ fun ProfileEdit(value: String){
 fun NavigationDrawerHeader(value:String?){
     Box(modifier = Modifier
         .fillMaxWidth()
-        .background(color = colorResource(id = R.color.appcolor))
+        .background(Brush.horizontalGradient(colors = listOf(Color(0xFF2EAAFA), Color(0xFF8C04DB))))
         .height(220.dp)
         .padding(20.dp)
     ){
@@ -416,7 +417,7 @@ fun NavigationDrawerHeader(value:String?){
             ProfileImage()
             Spacer(modifier = Modifier.height(2.dp))
             ProfileEdit(value = "Profile")
-            HeadingTextComponent(value = value?:"BrainTest")
+            HeadingTextComponent(value = value?:"Quizify")
         }
     }
 }
@@ -520,92 +521,101 @@ fun CardComponentMarathon(cardHeight:Int) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardComponentFullWidth(cardHeight:Int) {
-    Surface(
-        shape = RoundedCornerShape(16.dp),
-        color = Color(0xFFDAE1E7),
-        modifier = Modifier
-            .height(cardHeight.dp)
-            .padding(10.dp),
-        onClick = {Quizapprouter.navigateTo(Screen.PracticeSets)},
-        shadowElevation = 10.dp
-    ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+fun CardComponentFullWidth(cardHeight:Int, subjectName:String?, onClick: (String) -> Unit) {
+    if (subjectName != null) {
+        Surface(
+            shape = RoundedCornerShape(16.dp),
+            color = Color(0xFFDAE1E7),
+            modifier = Modifier
+                .height(cardHeight.dp)
+                .padding(10.dp),
+            onClick = {onClick(subjectName)},
+            shadowElevation = 10.dp
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(2f),
-                verticalArrangement = Arrangement.Center
+            Row(
+                modifier = Modifier.padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Text(
-                    text = "Full Test",
-                    fontSize =  24.sp,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.SemiBold
-                )
-
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(text = "Here you have a full test. It will gives you feel like a real exam.")
-
-                Spacer(modifier = Modifier.height(2.dp))
-
-            }
-            Column {
-
-                Surface(
-                    shape = RoundedCornerShape(10.dp),
-                    modifier = Modifier.size(width = 50.dp, height = 70.dp)
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(2f),
+                    verticalArrangement = Arrangement.Center
                 ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.quiz_app_splash),
-                        contentScale = ContentScale.Crop,
-                        contentDescription = null
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = "Full Test",
+                        fontSize =  24.sp,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold
                     )
+
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(text = "Here you have a full test. It will gives you feel like a real exam.")
+
+                    Spacer(modifier = Modifier.height(2.dp))
+
+                }
+                Column {
+
+                    Surface(
+                        shape = RoundedCornerShape(10.dp),
+                        modifier = Modifier.size(width = 50.dp, height = 70.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.quiz_app_splash),
+                            contentScale = ContentScale.Crop,
+                            contentDescription = null
+                        )
+                    }
                 }
             }
         }
+    } else {
+        Log.e("CardComponentFullWidth", "SubjectName is null")
     }
 }
 
 @Composable
-fun CardComponentHalfWidth(subjectName:String) {
-    Surface(
-        shape = RoundedCornerShape(16.dp),
-        color = Color(0xFFDAE1E7),
-        modifier = Modifier
-            .height(150.dp)
-            .padding(10.dp)
-            .width(160.dp),onClick = {Quizapprouter.navigateTo(Screen.PracticeSets)},
-        shadowElevation = 10.dp
-    ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+fun CardComponentHalfWidth(subjectName:String?, onClick: (String) -> Unit) {
+    if (subjectName != null) {
+        Surface(
+            shape = RoundedCornerShape(16.dp),
+            color = Color(0xFFDAE1E7),
+            modifier = Modifier
+                .height(150.dp)
+                .padding(10.dp)
+                .width(160.dp),
+            onClick = { onClick(subjectName)
+                println("Clicked on card with subjectName: $subjectName")},
+            shadowElevation = 10.dp
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(2f),
-                verticalArrangement = Arrangement.Center
+            Row(
+                modifier = Modifier.padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Spacer(modifier = Modifier.height(4.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(2f),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Spacer(modifier = Modifier.height(4.dp))
 
-                Text(modifier=Modifier.fillMaxWidth(),
-                    text = subjectName,
-                    fontSize =  18.sp,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center
-                )
+                    Text(modifier=Modifier.fillMaxWidth(),
+                        text = subjectName,
+                        fontSize =  18.sp,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
         }
+    } else {
+        Log.e("CardComponentHalfWidth", "SubjectName is null")
     }
 }
 

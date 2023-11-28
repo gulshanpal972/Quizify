@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.Quizify.MainScreen
 import com.example.Quizify.activities.AddQuestions
+import com.example.Quizify.activities.AddSet
 import com.example.Quizify.activities.Admin
 import com.example.Quizify.activities.AdminActivity
 import com.example.Quizify.activities.AdminLoginActivity
@@ -29,6 +30,7 @@ import com.example.Quizify.navigation.Screen
 @Composable
 fun Quizapp(homeViewModel: HomeViewModel= viewModel()){
     homeViewModel.checkActiveSession()
+    println("Quizapp recomposed")
     Surface(
         modifier = Modifier.fillMaxSize(),
         color= Color.White
@@ -38,6 +40,7 @@ fun Quizapp(homeViewModel: HomeViewModel= viewModel()){
         }
 
         Crossfade(targetState = Quizapprouter.currentScreen, label = "") { currentState->
+            println("Quizapp: ${currentState.value}")
             when(currentState.value){
                 is Screen.Signupactivity->{
                     Signupactivity()
@@ -58,7 +61,8 @@ fun Quizapp(homeViewModel: HomeViewModel= viewModel()){
                 }
 
                 is Screen.PracticeSets->{
-                    PracticeSets()
+                    val practiceSetsScreen = currentState.value as Screen.PracticeSets
+                    PracticeSets(selectedSubject = practiceSetsScreen.subjectName)
                 }
 
                 is Screen.Questionsactivity->{
@@ -83,6 +87,12 @@ fun Quizapp(homeViewModel: HomeViewModel= viewModel()){
 
                 is Screen.Admin->{
                     Admin()
+                }
+
+                is Screen.AddSet->{
+                    val selectedSubject =
+                        (currentState.value as? Screen.AddSet)?.subjectName // Adjust this based on your actual Screen.AddSet implementation
+                    AddSet(selectedSubject = selectedSubject)
                 }
             }
         }
